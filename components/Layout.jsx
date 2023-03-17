@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Navbar from './Navbar';
+import { globalStyles } from '../styles/globals';
 
 function Layout({children}) {
   return (
@@ -11,6 +12,7 @@ function Layout({children}) {
         </Head>
         <Navbar />
         <main className="section-content-wrapper">{children}</main>
+        <style jsx global>{globalStyles}</style>
     </div>
   )
 }

@@ -26,6 +26,9 @@
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 10px;
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .search_item img {

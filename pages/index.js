@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import axios from 'axios';
-
+import Link from 'next/link';
 
 export default function Home() {
   const [podcastArr, setPodcastArr] = useState(null);
@@ -25,7 +25,6 @@ export default function Home() {
         .catch(error => console.log(error));
       }
     } else {
-      console.log(podcastArr)
       setPodcastArr(JSON.parse(dataStored));
       setPodcastArrFiltered(JSON.parse(dataStored));
     }
@@ -44,11 +43,11 @@ export default function Home() {
         </div>
         <div className={styles.search_results}>
           {podcastArrFiltered && podcastArrFiltered.map(podcast => {
-            return  <div key={podcast.title.label}  className={styles.search_item}>
+            return  <Link href={`/podcast/${podcast.id.attributes['im:id']}`} key={podcast.title.label}  className={styles.search_item}>
                       <div><Image src={podcast['im:image'][0].label} alt="podcast image" width="100" height="100" /></div>
                       <div className={styles.search_item_title}>{podcast.title.label}</div>
                       <div className={styles.search_item_author}>Author: {podcast['im:artist'].label}</div>
-                    </div>
+                    </Link>
           })}
         </div>
       </main>
