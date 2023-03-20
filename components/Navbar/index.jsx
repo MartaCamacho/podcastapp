@@ -10,15 +10,18 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      setLoading(!loading)
-    }
+      setLoading(true);
+    };
+    const handleRouteChangeEnd = () => {
+      setLoading(false);
+    };
     router.events.on('routeChangeStart', handleRouteChange);
-    router.events.on('routeChangeEnd', handleRouteChange);
+    router.events.on('routeChangeEnd', handleRouteChangeEnd);
 
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
-      router.events.off('routeChangeEnd', handleRouteChange);
-    }
+      router.events.off('routeChangeEnd', handleRouteChangeEnd);
+    };
   }, []);
   
   return (

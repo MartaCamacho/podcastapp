@@ -1,8 +1,8 @@
-import React from 'react'
+import PodcastDetails from '../../../../../components/PodcastDetails'
 
 const EpisodeId = () => {
   return (
-    <div>EpisodeId</div>
+    <div><PodcastDetails /></div>
   )
 }
 

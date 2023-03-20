@@ -1,40 +1,25 @@
 import {useEffect, useState} from 'react';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import axios from 'axios';
 import Link from 'next/link';
+import { PodcastContext } from "../context/context";
+import { useContext } from "react";
 
 export default function Home() {
-  const [podcastArr, setPodcastArr] = useState(null);
-  const [podcastArrFiltered, setPodcastArrFiltered] = useState(null)
+  const { podcastArr } = useContext(PodcastContext);
+  const [podcastArrFiltered, setPodcastArrFiltered] = useState(podcastArr);
 
   useEffect(() => {
-    const dataStored = localStorage.getItem("podcastData");
-    const dateData = localStorage.getItem("podcastDataDate");
-    //call only API when there is no data stored or stored data is older than 1 day
-    if(!dataStored) {
-      const date = new Date();
-      if(!dateData || dateData < date.getDate() - 1) {
-        axios.get("https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json")
-        .then(res => {
-          setPodcastArr(res.data.feed.entry);
-          setPodcastArrFiltered(res.data.feed.entry);
-          localStorage.setItem("podcastData", JSON.stringify(res.data.feed.entry));
-          localStorage.setItem("podcastDataDate", Date.now());
-        })
-        .catch(error => console.log(error));
-      }
-    } else {
-      setPodcastArr(JSON.parse(dataStored));
-      setPodcastArrFiltered(JSON.parse(dataStored));
-    }
-  }, []);
+    setPodcastArrFiltered(podcastArr);
+  }, [podcastArr]);
+  
 
   const handleChangeFilter = (e) => {
     const {value} = e.target;
     const filterPodcast = podcastArr.filter(podcast => podcast.title.label.includes(value) || podcast.summary.label.includes(value));
     setPodcastArrFiltered(filterPodcast);
-  }
+  };
+
   return (
     <>
       <main className={styles.main}>
