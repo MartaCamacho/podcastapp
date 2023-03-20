@@ -1,6 +1,26 @@
 import css from 'styled-jsx/css';
 
 export const globalStyles = css.global`
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   .font-bold {
     font-weight: bold !important;
   }
