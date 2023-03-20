@@ -1,9 +1,11 @@
-import PodcastDetails from '../../../../../components/PodcastDetails'
+import PodcastDetails from '../../../../../components/PodcastDetails';
 
 const EpisodeId = () => {
   return (
-    <div><PodcastDetails /></div>
-  )
-}
+    <div>
+      <PodcastDetails />
+    </div>
+  );
+};
 
-export default EpisodeId
+export default EpisodeId;

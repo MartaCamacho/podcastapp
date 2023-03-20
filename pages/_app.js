@@ -1,23 +1,21 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import Layout from '../components/Layout';
-import Context from "../context/context";
+import Context from '../context/context';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css';
 
-
 function MyApp({ Component, pageProps }) {
-
-  useEffect(()=>{
-    import("bootstrap/dist/js/bootstrap");
-  },[]);
+  useEffect(() => {
+    import('bootstrap/dist/js/bootstrap');
+  }, []);
 
   return (
     <Context>
       <Layout>
-        <Component {...pageProps}/>
+        <Component {...pageProps} />
       </Layout>
     </Context>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

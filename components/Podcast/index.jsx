@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import SideBar from '../SideBar';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import { PodcastContext } from "../../context/context";
-import { useContext } from "react";
+import { PodcastContext } from '../../context/context';
+import { useContext } from 'react';
 
 const index = () => {
   const router = useRouter();
-  const { getPodcastDetails, description, podcastDetails, episodes } = useContext(PodcastContext);
+  const { getPodcastDetails, description, podcastDetails, episodes } =
+    useContext(PodcastContext);
 
   useEffect(() => {
     getPodcastDetails();
@@ -32,7 +33,7 @@ const index = () => {
           author={podcastDetails.artistName}
         />
       )}
-      <div className="d-flex flex-column pl-4 justify-content-end list-right-side-container">
+      <div className="d-flex flex-column pl-4 list-right-side-container">
         <Card className="w-100 shadow border-0 mb-5">
           <Card.Body className="font-bold w-100">
             Episodes: {(podcastDetails && podcastDetails.trackCount) || 0}

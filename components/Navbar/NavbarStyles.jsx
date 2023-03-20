@@ -1,9 +1,9 @@
 import css from 'styled-jsx/css';
 
 export default css`
-.navbar-container {
+  .navbar-container {
     font-weight: bold;
-    color: #546dc3; 
+    color: #546dc3;
     height: 60px;
     display: flex;
     align-items: center;
@@ -11,5 +11,5 @@ export default css`
     padding: 0 20px;
     border-bottom: 1px solid gray;
     font-size: 20px;
-}
-`
+  }
+`;

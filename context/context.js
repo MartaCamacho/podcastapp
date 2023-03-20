@@ -1,38 +1,49 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
 export const PodcastContext = createContext(null);
 
 function Context({ children }) {
-  const [corsAnywhereUrl, setCorsAnywhereUrl] = useState("https://cors-anywhere.herokuapp.com/")
+  const [corsAnywhereUrl, setCorsAnywhereUrl] = useState(
+    'https://cors-anywhere.herokuapp.com/'
+  );
   const [podcastArr, setPodcastArr] = useState(null);
   const [description, setDescription] = useState(null);
   const [podcastDetails, setPodcastDetails] = useState(null);
   const [episodes, setEpisodes] = useState(null);
-  
+
   const router = useRouter();
 
   useEffect(() => {
-    const dataStored = localStorage.getItem("podcastData");
-    const dateData = localStorage.getItem("podcastDataDate");
+    const dataStored = localStorage.getItem('podcastData');
+    const dateData = localStorage.getItem('podcastDataDate');
     //call only API when there is no data stored or stored data is older than 1 day
-    if(!dataStored) {
+    if (!dataStored) {
       const date = new Date();
-      const apiUrl = "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json";
-      if(!dateData || dateData < date.getDate() - 1) {
-        axios.get(corsAnywhereUrl + apiUrl)
-        .then(res => {
-          setPodcastArr(res.data.feed.entry);
-          localStorage.setItem("podcastData", JSON.stringify(res.data.feed.entry));
-          localStorage.setItem("podcastDataDate", Date.now());
-        })
-        .catch(error => console.log(error));
+      const apiUrl =
+        'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';
+      if (!dateData || dateData < date.getDate() - 1) {
+        axios
+          .get(corsAnywhereUrl + apiUrl)
+          .then((res) => {
+            setPodcastArr(res.data.feed.entry);
+            localStorage.setItem(
+              'podcastData',
+              JSON.stringify(res.data.feed.entry)
+            );
+            localStorage.setItem('podcastDataDate', Date.now());
+          })
+          .catch((error) => console.log(error));
       }
     } else {
       setPodcastArr(JSON.parse(dataStored));
     }
-  }, []);
+
+    if (typeof window !== 'undefined') {
+      getPodcastDetails();
+    }
+  }, [router]);
 
   const getPodcastDetails = () => {
     const podcastStored = localStorage.getItem(`Podcast${router.query.id}`);
@@ -81,15 +92,23 @@ function Context({ children }) {
       const description = parsedData.filter(
         (el) => el.id.attributes['im:id'] === router.query.id
       );
-      setDescription(description[0].summary.label);
+      setDescription(description[0] ? description[0].summary.label : null);
     }
-  }
-  
-    return (
-      <PodcastContext.Provider value={{ podcastArr, getPodcastDetails, description, podcastDetails, episodes }}>
-        {children}
-      </PodcastContext.Provider>
-    );
-  }
+  };
+
+  return (
+    <PodcastContext.Provider
+      value={{
+        podcastArr,
+        getPodcastDetails,
+        description,
+        podcastDetails,
+        episodes,
+      }}
+    >
+      {children}
+    </PodcastContext.Provider>
+  );
+}
 
 export default Context;

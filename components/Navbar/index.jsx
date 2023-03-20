@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 import styles from './NavbarStyles';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -16,20 +16,18 @@ const Navbar = () => {
       setLoading(false);
     };
     router.events.on('routeChangeStart', handleRouteChange);
-    router.events.on('routeChangeEnd', handleRouteChangeEnd);
+    router.events.on('routeChangeComplete', handleRouteChangeEnd);
 
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
-      router.events.off('routeChangeEnd', handleRouteChangeEnd);
+      router.events.off('routeChangeComplete', handleRouteChangeEnd);
     };
   }, []);
-  
+
   return (
     <nav className="navbar-container">
-    <Link href="/">
-      Podcaster
-    </Link>
-    {loading && <Spinner animation="border" />}
+      <Link href="/">Podcaster</Link>
+      {loading && <Spinner animation="border" />}
       <style jsx>{styles}</style>
     </nav>
   );
